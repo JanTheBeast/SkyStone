@@ -36,7 +36,7 @@ public class Autonoom extends LinearOpMode {
 
                     case 10:
                         telemetry.addData("Status: ", "Driving Forward");
-                        linearMotion(500, 1);
+                        turnLeftTrue(475, .5f, false);
                         Runstate = 20;
 
                     case 20:
@@ -57,37 +57,38 @@ public class Autonoom extends LinearOpMode {
 
 
     }
-    public void linearMotion(float ms, float speed){
-        double left, right = 0;
-        double endTime = System.currentTimeMillis() + ms;
+    public void linearMotion(long ms, float speed){
+        double left, right;
 
-        while(System.currentTimeMillis() < endTime){
-            right = -speed;
-            left = speed;
+            right = speed;
+            left = -speed;
+
             motorLeft.setPower(left);
             motorRight.setPower(right);
-        }
+
+            sleep(ms);
+
         motorRight.setPower(0);
         motorLeft.setPower(0);
     }
 
     //LEFT = TRUE & RIGHT = FALSE
-    public void turnLeftTrue(float ms, float speed, boolean leftTurn){
+    public void turnLeftTrue(long ms, float speed, boolean leftTurn){
         double left = 0;
         double right = 0;
-        double endTime = System.currentTimeMillis() + ms;
 
-        while(System.currentTimeMillis() < endTime){
             if(leftTurn){
-                right = -speed;
-                left = -speed;
-            }else if(!leftTurn){
                 right = speed;
                 left = speed;
+            }else if(!leftTurn){
+                right = -speed;
+                left = -speed;
             }
             motorLeft.setPower(left);
             motorRight.setPower(right);
-        }
+
+            sleep(ms);
+
         motorRight.setPower(0);
         motorLeft.setPower(0);
     }
