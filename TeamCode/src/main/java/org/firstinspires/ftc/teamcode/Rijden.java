@@ -24,6 +24,7 @@ public class Rijden extends OpMode{
     public void loop() {
         DriveChecks();
     }
+
     //Drivecheck function
     void DriveChecks() {
         double Left = drivedirectionspeed * gamepad1.left_stick_y;
