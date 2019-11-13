@@ -57,8 +57,8 @@ public class Mechanum_rijden extends OpMode{
 
         motorFrontRight.setPower(-power);
         motorBackRight.setPower(power);
-        motorFrontLeft.setPower(power);
-        motorBackLeft.setPower(-power);
+        motorFrontLeft.setPower(-power);
+        motorBackLeft.setPower(power);
     }
 
     void TurnAxis(){
