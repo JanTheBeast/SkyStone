@@ -6,14 +6,20 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 
 @TeleOp(name = "Mechanum_rijden", group = "")
 public class Mechanum_rijden extends OpMode{
+
+    //Declare all the motors
     private DcMotor motorBackLeft;
     private DcMotor motorFrontLeft;
     private DcMotor motorBackRight;
     private DcMotor motorFrontRight;
+
+    //drivedirectionspeed is going to control the speed
     double drivedirectionspeed = 1;
 
     @Override
     public void init() {
+
+        //get all the motors from the hub upon initialization
         motorBackLeft = hardwareMap.dcMotor.get("MotorBackLeft");
         motorBackRight = hardwareMap.dcMotor.get("MotorBackRight");
         motorFrontLeft = hardwareMap.dcMotor.get("MotorFrontLeft");
@@ -22,8 +28,11 @@ public class Mechanum_rijden extends OpMode{
     }
 
     @Override
+    //the things that happen every tick
     public void loop() { DriveChecks(); }
 
+
+    //in this funcion every thing that happens to the motors every ticks is described
     void DriveChecks() {
         if(Math.abs(gamepad1.left_stick_x) < Math.abs(gamepad1.left_stick_y)){
             DriveForward();
@@ -42,6 +51,9 @@ public class Mechanum_rijden extends OpMode{
         telemetry.addData("DriveDirectionSpeed", drivedirectionspeed);
     }
 
+    /*to make the code of DriveChecks more compact we made separate functions
+    for driving forward and sideways and turn round the axis
+     */
     void DriveForward(){
         double right = -gamepad1.left_stick_y * drivedirectionspeed;
         double left = gamepad1.left_stick_y * drivedirectionspeed;
