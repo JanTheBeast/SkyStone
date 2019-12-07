@@ -55,8 +55,9 @@ public class Mechanum_rijden extends OpMode{
     for driving forward and sideways and turn round the axis
      */
     void DriveForward(){
-        double right = -gamepad1.left_stick_y * drivedirectionspeed;
-        double left = gamepad1.left_stick_y * drivedirectionspeed;
+        double direction = Math.abs(gamepad1.left_stick_y)/gamepad1.left_stick_y;
+        double right = -direction * drivedirectionspeed;
+        double left = direction * drivedirectionspeed;
 
         motorFrontRight.setPower(right);
         motorBackRight.setPower(right);
@@ -65,12 +66,13 @@ public class Mechanum_rijden extends OpMode{
     }
 
     void DriveSideways(){
-        double power = gamepad1.left_stick_x * drivedirectionspeed;
+        double direction = Math.abs(gamepad1.left_stick_x)/gamepad1.left_stick_x;
+        double power = direction * drivedirectionspeed;
 
         motorFrontRight.setPower(-power);
         motorBackRight.setPower(power);
-        motorFrontLeft.setPower(power);
-        motorBackLeft.setPower(-power);
+        motorFrontLeft.setPower(-power);
+        motorBackLeft.setPower(power);
     }
 
     void TurnAxis(){

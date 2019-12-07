@@ -24,6 +24,7 @@ public class all_direction_rijden extends OpMode{
         motorFrontLeft = hardwareMap.dcMotor.get("MotorFrontLeft");
         motorFrontRight = hardwareMap.dcMotor.get("MotorFrontRight");
         drivedirectionspeed = 1;
+
     }
 
     @Override
@@ -39,14 +40,14 @@ public class all_direction_rijden extends OpMode{
         xMovement = gamepad1.left_stick_x;
 
         frontLeft += yMovement;
-        frontRight += yMovement;
-        backLeft -= yMovement;
+        frontRight -= yMovement;
+        backLeft += yMovement;
         backRight -= yMovement;
 
-        frontLeft += xMovement;
+        frontLeft -= xMovement;
         frontRight -= xMovement;
         backLeft += xMovement;
-        backRight -= xMovement;
+        backRight += xMovement;
 
         motorBackLeft.setPower(backLeft);
         motorFrontLeft.setPower(frontLeft);
