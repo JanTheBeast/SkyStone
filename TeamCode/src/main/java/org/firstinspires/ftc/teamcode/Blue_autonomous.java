@@ -6,8 +6,10 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 
 @Autonomous (name = "Blue", group = "Autonoom")
+@Disabled
 public class Blue_autonomous extends LinearOpMode {
     private DcMotor motorBackLeft;
     private DcMotor motorFrontLeft;

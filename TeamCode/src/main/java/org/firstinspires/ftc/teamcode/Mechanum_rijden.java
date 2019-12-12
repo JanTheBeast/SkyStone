@@ -3,8 +3,10 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 
 @TeleOp(name = "Mechanum_rijden", group = "")
+@Disabled
 public class Mechanum_rijden extends OpMode{
     private DcMotor motorBackLeft;
     private DcMotor motorFrontLeft;
