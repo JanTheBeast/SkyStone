@@ -22,7 +22,7 @@ public class TankDrive extends OpMode{
     public void loop() { DriveChecks(); }
 
     void DriveChecks() {
-        double right = -gamepad1.left_stick_y * drivedirectionspeed;
+        double right = -gamepad1.right_stick_y * drivedirectionspeed;
         double left = gamepad1.left_stick_y * drivedirectionspeed;
 
         motorLeft.setPower(left);
