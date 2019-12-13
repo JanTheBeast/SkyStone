@@ -9,12 +9,17 @@ import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 public class TankDrive extends OpMode{
     private DcMotor motorLeft;
     private DcMotor motorRight;
+    private DcMotor intakeRight;
+    private DcMotor intakeLeft;
     double drivedirectionspeed = 1;
 
     @Override
     public void init() {
         motorLeft = hardwareMap.dcMotor.get("motorLeft");
         motorRight = hardwareMap.dcMotor.get("motorRight");
+        intakeLeft = hardwareMap.dcMotor.get("intakeLeft");
+        intakeRight = hardwareMap.dcMotor.get("intakeRight");
+
         drivedirectionspeed = 1;
     }
 
@@ -24,9 +29,21 @@ public class TankDrive extends OpMode{
     void DriveChecks() {
         double right = -gamepad1.right_stick_y * drivedirectionspeed;
         double left = gamepad1.left_stick_y * drivedirectionspeed;
+        double intake = 1;
 
         motorLeft.setPower(left);
         motorRight.setPower(right);
+
+        if (gamepad2.y) {
+            intakeLeft.setPower(intake);
+            intakeRight.setPower(-intake);
+        }else if(gamepad2.x){
+            intakeLeft.setPower(-intake);
+            intakeRight.setPower(intake);
+        }else {
+            intakeLeft.setPower(0);
+            intakeRight.setPower(0);
+        }
 
         if (gamepad1.right_trigger > 0.5 && drivedirectionspeed < 5) {
             drivedirectionspeed += 0.0025f;
