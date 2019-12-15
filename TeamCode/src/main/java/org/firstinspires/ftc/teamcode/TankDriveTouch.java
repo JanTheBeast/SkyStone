@@ -3,15 +3,22 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
+import com.qualcomm.robotcore.hardware.DigitalChannel;
 
 @TeleOp(name = "TankDrive", group = "")
-public class TankDrive extends OpMode{
+public class TankDriveTouch extends OpMode{
     private DcMotor motorLeft;
     private DcMotor motorRight;
     private DcMotor intakeRight;
     private DcMotor intakeLeft;
-    double drivedirectionspeed;
+    private DigitalChannel sensorTouch;
+
+    boolean intakeMotorOut;
+    boolean intakeMotorIn;
+    boolean intakeSwitchOut;
+    boolean intakeSwitchIn;
+
+    double drivedirectionspeed = 1;
 
     @Override
     public void init() {
@@ -19,6 +26,12 @@ public class TankDrive extends OpMode{
         motorRight = hardwareMap.dcMotor.get("motorRight");
         intakeLeft = hardwareMap.dcMotor.get("intakeLeft");
         intakeRight = hardwareMap.dcMotor.get("intakeRight");
+
+        intakeMotorIn = false;
+        intakeMotorOut = false;
+        intakeSwitchIn = false;
+        intakeSwitchOut = false;
+        sensorTouch = hardwareMap.digitalChannel.get("sensorTouch");
 
         drivedirectionspeed = 1;
     }
@@ -38,15 +51,32 @@ public class TankDrive extends OpMode{
 
 //--------------------------------------------------------------------------
 
-        if (gamepad2.y) {
-            intakeLeft.setPower(intake);
-            intakeRight.setPower(intake);
-        }else if(gamepad2.x){
-            intakeLeft.setPower(-intake);
-            intakeRight.setPower(-intake);
-        }else {
-            intakeLeft.setPower(0);
-            intakeRight.setPower(0);
+        if (gamepad2.y && !intakeSwitchIn){
+            if(intakeMotorIn){
+                intakeLeft.setPower(0);
+                intakeRight.setPower(0);
+            }else{
+                intakeLeft.setPower(intake);
+                intakeRight.setPower(intake);
+                intakeMotorIn = true;
+            }
+            intakeSwitchIn = true;
+        }else if(!gamepad2.y){
+            intakeSwitchIn = false;
+        }
+
+        if (gamepad2.x && !intakeSwitchOut){
+            if(intakeMotorOut){
+                intakeLeft.setPower(0);
+                intakeRight.setPower(0);
+            }else{
+                intakeLeft.setPower(-intake);
+                intakeRight.setPower(-intake);
+                intakeMotorOut = true;
+            }
+            intakeSwitchOut = true;
+        }else if(!gamepad2.x){
+            intakeSwitchOut = false;
         }
 
 //--------------------------------------------------------------------------
