@@ -65,7 +65,7 @@ public class TankDriveTouch extends OpMode{
                 break;
 
             case 10:
-                intakeLeft.setPower(intake);
+                intakeLeft.setPower(-intake);
                 intakeRight.setPower(intake);
 
                 if(sensorTouch.getState() == false){
@@ -84,10 +84,10 @@ public class TankDriveTouch extends OpMode{
                 break;
 
             case 30:
-                intakeLeft.setPower(-intake);
+                intakeLeft.setPower(intake);
                 intakeRight.setPower(-intake);
 
-                if(gamepad2.y){
+                if(gamepad2.x){
                     intakeState = 0;
                 }
 

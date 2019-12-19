@@ -40,10 +40,10 @@ public class TankDrive extends OpMode{
 
         if (gamepad2.y) {
             intakeLeft.setPower(intake);
-            intakeRight.setPower(intake);
+            intakeRight.setPower(-intake);
         }else if(gamepad2.x){
             intakeLeft.setPower(-intake);
-            intakeRight.setPower(-intake);
+            intakeRight.setPower(intake);
         }else {
             intakeLeft.setPower(0);
             intakeRight.setPower(0);
