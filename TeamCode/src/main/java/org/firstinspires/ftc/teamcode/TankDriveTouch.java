@@ -5,7 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DigitalChannel;
 
-@TeleOp(name = "TankDrive", group = "")
+@TeleOp(name = "TankDriveTouch", group = "")
 public class TankDriveTouch extends OpMode{
     private DcMotor motorLeft;
     private DcMotor motorRight;
@@ -13,10 +13,11 @@ public class TankDriveTouch extends OpMode{
     private DcMotor intakeLeft;
     private DigitalChannel sensorTouch;
 
-    boolean intakeMotorOut;
-    boolean intakeMotorIn;
-    boolean intakeSwitchOut;
-    boolean intakeSwitchIn;
+    int intakeState;
+    //boolean intakeMotorOut;
+   // boolean intakeMotorIn;
+    //boolean intakeSwitchOut;
+   // boolean intakeSwitchIn;
 
     double drivedirectionspeed = 1;
 
@@ -27,10 +28,11 @@ public class TankDriveTouch extends OpMode{
         intakeLeft = hardwareMap.dcMotor.get("intakeLeft");
         intakeRight = hardwareMap.dcMotor.get("intakeRight");
 
-        intakeMotorIn = false;
-        intakeMotorOut = false;
-        intakeSwitchIn = false;
-        intakeSwitchOut = false;
+        intakeState = 0;
+        //intakeMotorIn = false;
+        //intakeMotorOut = false;
+        //intakeSwitchIn = false;
+        //intakeSwitchOut = false;
         sensorTouch = hardwareMap.digitalChannel.get("sensorTouch");
 
         drivedirectionspeed = 1;
@@ -51,7 +53,50 @@ public class TankDriveTouch extends OpMode{
 
 //--------------------------------------------------------------------------
 
-        if (gamepad2.y && !intakeSwitchIn){
+        switch(intakeState){
+            case 0:
+                intakeLeft.setPower(0);
+                intakeRight.setPower(0);
+
+                if(gamepad2.y){
+                    intakeState = 10;
+                }
+
+                break;
+
+            case 10:
+                intakeLeft.setPower(intake);
+                intakeRight.setPower(intake);
+
+                if(sensorTouch.getState() == false){
+                    intakeState = 20;
+                }
+                break;
+
+            case 20:
+                intakeLeft.setPower(0);
+                intakeRight.setPower(0);
+
+                if(gamepad2.y){
+                    intakeState = 30;
+                }
+
+                break;
+
+            case 30:
+                intakeLeft.setPower(-intake);
+                intakeRight.setPower(-intake);
+
+                if(gamepad2.y){
+                    intakeState = 0;
+                }
+
+                break;
+        }
+
+//--------------------------------------------------------------------------
+
+        /*if (gamepad2.y && !intakeSwitchIn){
             if(intakeMotorIn){
                 intakeLeft.setPower(0);
                 intakeRight.setPower(0);
@@ -77,7 +122,7 @@ public class TankDriveTouch extends OpMode{
             intakeSwitchOut = true;
         }else if(!gamepad2.x){
             intakeSwitchOut = false;
-        }
+        }*/
 
 //--------------------------------------------------------------------------
 
