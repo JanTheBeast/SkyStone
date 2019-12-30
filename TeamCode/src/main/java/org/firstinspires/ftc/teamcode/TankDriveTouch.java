@@ -14,6 +14,8 @@ public class TankDriveTouch extends OpMode{
     private DigitalChannel sensorTouch;
 
     int intakeState;
+
+    int xbutton;
     //boolean intakeMotorOut;
    // boolean intakeMotorIn;
     //boolean intakeSwitchOut;
@@ -29,6 +31,7 @@ public class TankDriveTouch extends OpMode{
         intakeRight = hardwareMap.dcMotor.get("intakeRight");
 
         intakeState = 0;
+        xbutton = 0;
         //intakeMotorIn = false;
         //intakeMotorOut = false;
         //intakeSwitchIn = false;
@@ -70,6 +73,8 @@ public class TankDriveTouch extends OpMode{
 
                 if(sensorTouch.getState() == false){
                     intakeState = 20;
+                }else if(gamepad2.x){
+                    intakeState = 0;
                 }
                 break;
 
@@ -77,17 +82,17 @@ public class TankDriveTouch extends OpMode{
                 intakeLeft.setPower(0);
                 intakeRight.setPower(0);
 
-                if(gamepad2.y){
+                if(gamepad2.x){
                     intakeState = 30;
                 }
 
                 break;
 
             case 30:
-                intakeLeft.setPower(intake);
-                intakeRight.setPower(-intake);
-
                 if(gamepad2.x){
+                    intakeLeft.setPower(intake);
+                    intakeRight.setPower(-intake);
+                }else if(!gamepad2.x){
                     intakeState = 0;
                 }
 
@@ -126,10 +131,14 @@ public class TankDriveTouch extends OpMode{
 
 //--------------------------------------------------------------------------
 
-        if (gamepad1.right_trigger > 0.5 && drivedirectionspeed < 5) {
-            drivedirectionspeed += 0.0025f;
-        } else if (gamepad1.left_trigger > 0.5 && drivedirectionspeed > 0.003) {
-            drivedirectionspeed -= 0.0025f;
+        if (gamepad1.right_trigger > 0.5 && drivedirectionspeed < 1) {
+            drivedirectionspeed += 0.005f;
+        } else if (gamepad1.left_trigger > 0.5 && drivedirectionspeed > 0.2) {
+            drivedirectionspeed -= 0.005f;
+        } else if (gamepad1.right_bumper){
+            drivedirectionspeed = 1f;
+        } else if (gamepad1.left_bumper){
+            drivedirectionspeed = 0.33f;
         }
 
         telemetry.addData("DriveDirectionSpeed", drivedirectionspeed);
