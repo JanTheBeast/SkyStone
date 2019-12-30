@@ -4,6 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DigitalChannel;
+import com.qualcomm.robotcore.hardware.Servo;
 
 @TeleOp(name = "TankDriveTouch", group = "")
 public class TankDriveTouch extends OpMode{
@@ -11,6 +12,7 @@ public class TankDriveTouch extends OpMode{
     private DcMotor motorRight;
     private DcMotor intakeRight;
     private DcMotor intakeLeft;
+    private Servo capStone;
     private DigitalChannel sensorTouch;
 
     int intakeState;
@@ -29,6 +31,7 @@ public class TankDriveTouch extends OpMode{
         motorRight = hardwareMap.dcMotor.get("motorRight");
         intakeLeft = hardwareMap.dcMotor.get("intakeLeft");
         intakeRight = hardwareMap.dcMotor.get("intakeRight");
+        capStone = hardwareMap.servo.get("capStone");
 
         intakeState = 0;
         xbutton = 0;
@@ -54,6 +57,11 @@ public class TankDriveTouch extends OpMode{
         motorLeft.setPower(left);
         motorRight.setPower(right);
 
+        if(gamepad2.dpad_up){
+            capStone.setPosition(0.25);
+        }else if(gamepad2.dpad_down){
+            capStone.setPosition(0);
+        }
 //--------------------------------------------------------------------------
 
         switch(intakeState){
