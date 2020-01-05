@@ -41,7 +41,7 @@ public class TankDriveTouch extends OpMode{
         //intakeSwitchOut = false;
         sensorTouch = hardwareMap.digitalChannel.get("sensorTouch");
 
-        drivedirectionspeed = 1;
+        drivedirectionspeed = 0.8;
     }
 
     @Override
@@ -59,8 +59,11 @@ public class TankDriveTouch extends OpMode{
 
         if(gamepad2.dpad_up){
             capStone.setPosition(0.25);
+            telemetry.addLine("Het werkt");
         }else if(gamepad2.dpad_down){
             capStone.setPosition(0);
+            telemetry.addLine("Het werkt");
+
         }
 //--------------------------------------------------------------------------
 
