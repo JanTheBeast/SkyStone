@@ -23,7 +23,7 @@ public class TankDriveTouch extends OpMode{
     //boolean intakeSwitchOut;
    // boolean intakeSwitchIn;
 
-    double drivedirectionspeed = 1;
+    double drivedirectionspeed;
 
     @Override
     public void init() {
@@ -41,7 +41,7 @@ public class TankDriveTouch extends OpMode{
         //intakeSwitchOut = false;
         sensorTouch = hardwareMap.digitalChannel.get("sensorTouch");
 
-        drivedirectionspeed = 0.8;
+        drivedirectionspeed = 0.75;
     }
 
     @Override
