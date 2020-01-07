@@ -57,6 +57,7 @@ public class TankDriveTouch extends OpMode{
         motorLeft.setPower(left);
         motorRight.setPower(right);
 
+
         if(gamepad2.dpad_up){
             capStone.setPosition(0.25);
         }else if(gamepad2.dpad_down){
