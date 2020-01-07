@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DigitalChannel;
 
-@Autonomous (name = "intake_red", group = "")
+@Autonomous (name = "intake_red_extended", group = "")
 
 public class auto_intake_extended extends LinearOpMode {
     private DcMotor motorLeft;
@@ -55,13 +55,24 @@ public class auto_intake_extended extends LinearOpMode {
                         break;
 
                     case 20:
-                        DriveForward(-1,(int) DriveBack);
+                        DriveForward(-1,(int) DriveBack - 250);
                         TurnAxis(0.5, 750);
-                        DriveForward(1,1800);
+                        DriveForward(1,1600);
                         Runstate = 30;
                         break;
 
                     case 30:
+                        IntakeOut(1, 500);
+                        DriveForward(-1,1800);
+                        TurnAxis(-0.5, 750);
+                        DriveForwardIntake(1, 2000);
+                        Runstate = 40;
+                        break;
+
+                    case 40:
+                        DriveForward(-1, (int) DriveBack - 250);
+                        TurnAxis(0.5, 750);
+                        DriveForward(1,1800);
                         IntakeOut(1, 500);
                         DriveForward(-1,500);
                         stop();
