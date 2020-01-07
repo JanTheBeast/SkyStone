@@ -8,7 +8,7 @@ import com.qualcomm.robotcore.hardware.DigitalChannel;
 
 @Autonomous (name = "intake_red", group = "")
 
-public class auto_intake extends LinearOpMode {
+public class auto_intake_extended extends LinearOpMode {
     private DcMotor motorLeft;
     private DcMotor motorRight;
     private DcMotor intakeLeft;
@@ -17,6 +17,7 @@ public class auto_intake extends LinearOpMode {
     private DigitalChannel sensorTouch;
     private boolean autoIntake;
     public int Runstate = 0;
+    private long DriveBack;
 
     @Override
     public void runOpMode() {
@@ -27,6 +28,7 @@ public class auto_intake extends LinearOpMode {
         sensorTouch = hardwareMap.digitalChannel.get("sensorTouch");
         autoIntake = false;
         Runstate = 0;
+        DriveBack = 0;
 
         telemetry.addData(">", "Press Play to start tracking");
         telemetry.update();
@@ -53,7 +55,7 @@ public class auto_intake extends LinearOpMode {
                         break;
 
                     case 20:
-                        DriveForward(-1,1000);
+                        DriveForward(-1,(int) DriveBack);
                         TurnAxis(0.5, 750);
                         DriveForward(1,1800);
                         Runstate = 30;
@@ -103,6 +105,7 @@ public class auto_intake extends LinearOpMode {
 
             //sleep(time);
             if(sensorTouch.getState() == false || System.currentTimeMillis() - intakeTime > time){
+                DriveBack = System.currentTimeMillis() - intakeTime;
                 intakeLeft.setPower(0);
                 intakeRight.setPower(0);
                 motorLeft.setPower(0);

@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
-@Autonomous (name = "recht", group = "Autonoom")
+@Autonomous (name = "recht", group = "")
 
 public class auto_recht extends LinearOpMode {
     private DcMotor motorLeft;
