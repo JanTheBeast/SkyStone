@@ -14,8 +14,10 @@ public class auto_intake_extended extends LinearOpMode {
     private DcMotor intakeLeft;
     private DcMotor intakeRight;
     private long intakeTime;
+    private long intakeTime2;
     private DigitalChannel sensorTouch;
     private boolean autoIntake;
+    private boolean autoIntake2;
     public int Runstate = 0;
     private long DriveBack;
 
@@ -27,6 +29,7 @@ public class auto_intake_extended extends LinearOpMode {
         intakeRight = hardwareMap.dcMotor.get("intakeRight");
         sensorTouch = hardwareMap.digitalChannel.get("sensorTouch");
         autoIntake = false;
+        autoIntake2 = false;
         Runstate = 0;
         DriveBack = 0;
 
@@ -34,6 +37,7 @@ public class auto_intake_extended extends LinearOpMode {
         telemetry.update();
         waitForStart();
         intakeTime = System.currentTimeMillis();
+        intakeTime2 = System.currentTimeMillis();
 
         if (opModeIsActive()) {
 
@@ -55,8 +59,8 @@ public class auto_intake_extended extends LinearOpMode {
                         break;
 
                     case 20:
-                        DriveForward(-1,(int) DriveBack - 250);
-                        TurnAxis(0.5, 750);
+                        DriveForward(-1,(int) DriveBack - 500);
+                        TurnAxis(0.5, 700);
                         DriveForward(1,1600);
                         Runstate = 30;
                         break;
@@ -64,8 +68,9 @@ public class auto_intake_extended extends LinearOpMode {
                     case 30:
                         IntakeOut(1, 500);
                         DriveForward(-1,1800);
-                        TurnAxis(-0.5, 750);
-                        DriveForwardIntake(1, 2000);
+                        TurnAxis(-0.5, 700);
+                        autoIntake2 = true;
+                        DriveForwardIntake2(1, 2000);
                         Runstate = 40;
                         break;
 
@@ -122,6 +127,26 @@ public class auto_intake_extended extends LinearOpMode {
                 motorLeft.setPower(0);
                 motorRight.setPower(0);
                 autoIntake = false;
+            }
+
+        }
+    }
+
+    void DriveForwardIntake2(double power, int time) {
+        while(autoIntake2) {
+            motorRight.setPower(power);
+            motorLeft.setPower(-power);
+            intakeLeft.setPower(-power);
+            intakeRight.setPower(power);
+
+            //sleep(time);
+            if(sensorTouch.getState() == false || System.currentTimeMillis() - intakeTime2 > time){
+                DriveBack = System.currentTimeMillis() - intakeTime2;
+                intakeLeft.setPower(0);
+                intakeRight.setPower(0);
+                motorLeft.setPower(0);
+                motorRight.setPower(0);
+                autoIntake2 = false;
             }
 
         }
