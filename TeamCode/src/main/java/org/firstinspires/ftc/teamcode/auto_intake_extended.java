@@ -69,7 +69,7 @@ public class auto_intake_extended extends LinearOpMode {
 
                     case 30:
                         IntakeOut(1, 500);
-                        DriveForward(-1,1800);
+                        DriveForward(-1,2400);
                         TurnAxis(-0.5, 700);
                         autoIntake = true;
                         DriveForwardIntake(1, 2000);
@@ -77,8 +77,8 @@ public class auto_intake_extended extends LinearOpMode {
                         break;
 
                     case 40:
-                        DriveForward(-1, (int) DriveBack - 250);
-                        TurnAxis(0.5, 750);
+                        DriveForward(-1, (int) DriveBack - 50);
+                        TurnAxis(0.5, 650);
                         DriveForward(1,1800);
                         IntakeOut(1, 500);
                         DriveForward(-1,500);
