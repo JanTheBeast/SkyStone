@@ -13,12 +13,13 @@ public class auto_intake_extended extends LinearOpMode {
     private DcMotor motorRight;
     private DcMotor intakeLeft;
     private DcMotor intakeRight;
-    private long intakeTime;
-    private long intakeTime2;
+    //private long intakeTime;
+    //private long intakeTime2;
     private DigitalChannel sensorTouch;
     private boolean autoIntake;
-    private boolean autoIntake2;
+    //private boolean autoIntake2;
     public int Runstate = 0;
+    public long startTime;
     private long DriveBack;
 
     @Override
@@ -29,15 +30,16 @@ public class auto_intake_extended extends LinearOpMode {
         intakeRight = hardwareMap.dcMotor.get("intakeRight");
         sensorTouch = hardwareMap.digitalChannel.get("sensorTouch");
         autoIntake = false;
-        autoIntake2 = false;
+        //autoIntake2 = false;
         Runstate = 0;
         DriveBack = 0;
+        startTime = 0;
 
         telemetry.addData(">", "Press Play to start tracking");
         telemetry.update();
         waitForStart();
-        intakeTime = System.currentTimeMillis();
-        intakeTime2 = System.currentTimeMillis();
+        //intakeTime = System.currentTimeMillis();
+        //intakeTime2 = System.currentTimeMillis();
 
         if (opModeIsActive()) {
 
@@ -60,7 +62,7 @@ public class auto_intake_extended extends LinearOpMode {
 
                     case 20:
                         DriveForward(-1,(int) DriveBack - 500);
-                        TurnAxis(0.5, 700);
+                        TurnAxis(0.5, 650);
                         DriveForward(1,1600);
                         Runstate = 30;
                         break;
@@ -69,8 +71,8 @@ public class auto_intake_extended extends LinearOpMode {
                         IntakeOut(1, 500);
                         DriveForward(-1,1800);
                         TurnAxis(-0.5, 700);
-                        autoIntake2 = true;
-                        DriveForwardIntake2(1, 2000);
+                        autoIntake = true;
+                        DriveForwardIntake(1, 2000);
                         Runstate = 40;
                         break;
 
@@ -114,25 +116,28 @@ public class auto_intake_extended extends LinearOpMode {
 
     void DriveForwardIntake(double power, int time) {
         while(autoIntake) {
-            motorRight.setPower(power);
-            motorLeft.setPower(-power);
-            intakeLeft.setPower(-power);
-            intakeRight.setPower(power);
-
-            //sleep(time);
-            if(sensorTouch.getState() == false || System.currentTimeMillis() - intakeTime > time){
-                DriveBack = System.currentTimeMillis() - intakeTime;
-                intakeLeft.setPower(0);
-                intakeRight.setPower(0);
-                motorLeft.setPower(0);
-                motorRight.setPower(0);
-                autoIntake = false;
+            if (startTime == 0) {
+                startTime = System.currentTimeMillis();
             }
+                motorRight.setPower(power);
+                motorLeft.setPower(-power);
+                intakeLeft.setPower(-power);
+                intakeRight.setPower(power);
 
+                //sleep(time);
+                if (sensorTouch.getState() == false || startTime + time < System.currentTimeMillis()) {
+                    DriveBack = System.currentTimeMillis() - startTime;
+                    intakeLeft.setPower(0);
+                    intakeRight.setPower(0);
+                    motorLeft.setPower(0);
+                    motorRight.setPower(0);
+                    startTime = 0;
+                    autoIntake = false;
+                }
         }
     }
 
-    void DriveForwardIntake2(double power, int time) {
+    /*void DriveForwardIntake2(double power, int time) {
         while(autoIntake2) {
             motorRight.setPower(power);
             motorLeft.setPower(-power);
@@ -150,7 +155,7 @@ public class auto_intake_extended extends LinearOpMode {
             }
 
         }
-    }
+    }*/
 
     void IntakeIn(double power){
         intakeLeft.setPower(-power);

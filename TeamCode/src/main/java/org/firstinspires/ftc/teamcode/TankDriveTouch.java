@@ -59,10 +59,10 @@ public class TankDriveTouch extends OpMode{
 
 
         if(gamepad2.dpad_up){
-            capStone.setPosition(0.25);
+            capStone.setPosition(0);
             telemetry.addLine("Het werkt");
         }else if(gamepad2.dpad_down){
-            capStone.setPosition(0);
+            capStone.setPosition(0.35);
             telemetry.addLine("Het werkt");
 
         }
