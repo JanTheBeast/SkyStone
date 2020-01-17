@@ -13,6 +13,7 @@ public class TankDriveTouch extends OpMode{
     private DcMotor intakeRight;
     private DcMotor intakeLeft;
     private Servo capStone;
+    private Servo claw;
     private DigitalChannel sensorTouch;
 
     int intakeState;
@@ -32,6 +33,7 @@ public class TankDriveTouch extends OpMode{
         intakeLeft = hardwareMap.dcMotor.get("intakeLeft");
         intakeRight = hardwareMap.dcMotor.get("intakeRight");
         capStone = hardwareMap.servo.get("capStone");
+        claw = hardwareMap.servo.get("claw");
 
         intakeState = 0;
         xbutton = 0;
@@ -60,11 +62,14 @@ public class TankDriveTouch extends OpMode{
 
         if(gamepad2.dpad_up){
             capStone.setPosition(0);
-            telemetry.addLine("Het werkt");
         }else if(gamepad2.dpad_down){
             capStone.setPosition(0.35);
-            telemetry.addLine("Het werkt");
+        }
 
+        if (gamepad2.dpad_left){
+            claw.setPosition(0);
+        }else if (gamepad2.dpad_right){
+            claw.setPosition(0.25);
         }
 //--------------------------------------------------------------------------
 
