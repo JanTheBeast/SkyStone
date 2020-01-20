@@ -12,9 +12,16 @@ public class TankDriveTouch extends OpMode{
     private DcMotor motorRight;
     private DcMotor intakeRight;
     private DcMotor intakeLeft;
-    private Servo capStone;
-    private Servo claw;
+    private Servo capStone1;
+    private Servo capStone2;
+    private Servo claw1;
+    private Servo claw2;
     private DigitalChannel sensorTouch;
+
+    private final double increment = 0.05;
+    private final double pos_max = 1;
+    private final double pos_min = 0;
+    private int ms_cycle;
 
     int intakeState;
 
@@ -32,8 +39,10 @@ public class TankDriveTouch extends OpMode{
         motorRight = hardwareMap.dcMotor.get("motorRight");
         intakeLeft = hardwareMap.dcMotor.get("intakeLeft");
         intakeRight = hardwareMap.dcMotor.get("intakeRight");
-        capStone = hardwareMap.servo.get("capStone");
-        claw = hardwareMap.servo.get("claw");
+        capStone1 = hardwareMap.servo.get("capStone1");
+        capStone2 = hardwareMap.servo.get("capStone2");
+        claw1 = hardwareMap.servo.get("claw1");
+        claw2 = hardwareMap.servo.get("claw2");
 
         intakeState = 0;
         xbutton = 0;
@@ -61,16 +70,13 @@ public class TankDriveTouch extends OpMode{
 
 
         if(gamepad2.dpad_up){
-            capStone.setPosition(0);
+            capStone1.setPosition(0);
+            capStone2.setPosition(0.30);
         }else if(gamepad2.dpad_down){
-            capStone.setPosition(0.35);
+            capStone1.setPosition(0.30);
+            capStone2.setPosition(0);
         }
 
-        if (gamepad2.dpad_left){
-            claw.setPosition(0);
-        }else if (gamepad2.dpad_right){
-            claw.setPosition(0.25);
-        }
 //--------------------------------------------------------------------------
 
         switch(intakeState){

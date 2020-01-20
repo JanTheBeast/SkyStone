@@ -5,6 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DigitalChannel;
+import com.qualcomm.robotcore.hardware.Servo;
 
 @Autonomous (name = "intake_red_extended", group = "")
 
@@ -13,6 +14,11 @@ public class auto_intake_extended extends LinearOpMode {
     private DcMotor motorRight;
     private DcMotor intakeLeft;
     private DcMotor intakeRight;
+    private Servo capStone1;
+    private Servo capStone2;
+    private Servo claw1;
+    private Servo claw2;
+
     //private long intakeTime;
     //private long intakeTime2;
     private DigitalChannel sensorTouch;
@@ -28,6 +34,10 @@ public class auto_intake_extended extends LinearOpMode {
         motorRight = hardwareMap.dcMotor.get("motorRight");
         intakeLeft = hardwareMap.dcMotor.get("intakeLeft");
         intakeRight = hardwareMap.dcMotor.get("intakeRight");
+        capStone1 = hardwareMap.servo.get("capStone1");
+        capStone2 = hardwareMap.servo.get("capStone2");
+        claw1 = hardwareMap.servo.get("claw1");
+        claw2 = hardwareMap.servo.get("claw2");
         sensorTouch = hardwareMap.digitalChannel.get("sensorTouch");
         autoIntake = false;
         //autoIntake2 = false;
