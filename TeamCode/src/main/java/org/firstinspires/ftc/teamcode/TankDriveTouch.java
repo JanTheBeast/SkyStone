@@ -18,11 +18,6 @@ public class TankDriveTouch extends OpMode{
     private Servo claw2;
     private DigitalChannel sensorTouch;
 
-    private final double increment = 0.05;
-    private final double pos_max = 1;
-    private final double pos_min = 0;
-    private int ms_cycle;
-
     int intakeState;
 
     int xbutton;
@@ -70,11 +65,19 @@ public class TankDriveTouch extends OpMode{
 
 
         if(gamepad2.dpad_up){
-            capStone1.setPosition(0);
+            capStone1.setPosition(-0.70);
             capStone2.setPosition(0.30);
         }else if(gamepad2.dpad_down){
-            capStone1.setPosition(0.30);
+            capStone1.setPosition(0.50);
             capStone2.setPosition(0);
+        }
+
+        if(gamepad2.left_bumper){
+            claw1.setPosition(0.60);
+            claw2.setPosition(0.60);
+        }else if(gamepad2.right_bumper){
+            claw1.setPosition(0.80);
+            claw2.setPosition(0.40);
         }
 
 //--------------------------------------------------------------------------
@@ -121,36 +124,6 @@ public class TankDriveTouch extends OpMode{
 
                 break;
         }
-
-//--------------------------------------------------------------------------
-
-        /*if (gamepad2.y && !intakeSwitchIn){
-            if(intakeMotorIn){
-                intakeLeft.setPower(0);
-                intakeRight.setPower(0);
-            }else{
-                intakeLeft.setPower(intake);
-                intakeRight.setPower(intake);
-                intakeMotorIn = true;
-            }
-            intakeSwitchIn = true;
-        }else if(!gamepad2.y){
-            intakeSwitchIn = false;
-        }
-
-        if (gamepad2.x && !intakeSwitchOut){
-            if(intakeMotorOut){
-                intakeLeft.setPower(0);
-                intakeRight.setPower(0);
-            }else{
-                intakeLeft.setPower(-intake);
-                intakeRight.setPower(-intake);
-                intakeMotorOut = true;
-            }
-            intakeSwitchOut = true;
-        }else if(!gamepad2.x){
-            intakeSwitchOut = false;
-        }*/
 
 //--------------------------------------------------------------------------
 

@@ -45,6 +45,11 @@ public class auto_intake_extended extends LinearOpMode {
         DriveBack = 0;
         startTime = 0;
 
+        capStone1.setPosition(0);
+        capStone2.setPosition(1);
+        claw1.setPosition(0.60);
+        claw2.setPosition(0.60);
+
         telemetry.addData(">", "Press Play to start tracking");
         telemetry.update();
         waitForStart();
