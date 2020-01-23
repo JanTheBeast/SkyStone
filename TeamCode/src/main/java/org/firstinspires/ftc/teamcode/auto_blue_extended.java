@@ -7,9 +7,9 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DigitalChannel;
 import com.qualcomm.robotcore.hardware.Servo;
 
-@Autonomous (name = "auto_red", group = "")
+@Autonomous (name = "auto_blue", group = "")
 
-public class auto_intake_extended extends LinearOpMode {
+public class auto_blue_extended extends LinearOpMode {
     private DcMotor motorLeft;
     private DcMotor motorRight;
     private DcMotor intakeLeft;
@@ -77,7 +77,7 @@ public class auto_intake_extended extends LinearOpMode {
 
                     case 20:
                         DriveForward(-1,(int) DriveBack - 500);
-                        TurnAxis(0.5, 650);
+                        TurnAxis(-0.5, 650);
                         DriveForward(1,1600);
                         Runstate = 30;
                         break;
@@ -85,7 +85,7 @@ public class auto_intake_extended extends LinearOpMode {
                     case 30:
                         IntakeOut(1, 500);
                         DriveForward(-1,2400);
-                        TurnAxis(-0.5, 700);
+                        TurnAxis(0.5, 700);
                         autoIntake = true;
                         DriveForwardIntake(1, 2000);
                         Runstate = 40;
@@ -93,7 +93,7 @@ public class auto_intake_extended extends LinearOpMode {
 
                     case 40:
                         DriveForward(-1, (int) DriveBack - 50);
-                        TurnAxis(0.5, 650);
+                        TurnAxis(-0.5, 650);
                         DriveForward(1,1800);
                         IntakeOut(1, 500);
                         DriveForward(-1,500);
