@@ -64,13 +64,9 @@ public class TankDriveTouch extends OpMode{
         double right = -gamepad1.right_stick_y * drivedirectionspeed;
         double left = gamepad1.left_stick_y * drivedirectionspeed;
 
-//--------------------------------------------------------------------------
-
         //setting the motor speeds
         motorLeft.setPower(left);
         motorRight.setPower(right);
-
-//--------------------------------------------------------------------------
 
         //clamping the dds and making it go up and down with a button
         if (gamepad1.right_trigger > 0.5 && drivedirectionspeed < 1) {
@@ -86,6 +82,8 @@ public class TankDriveTouch extends OpMode{
         telemetry.addData("DriveDirectionSpeed", drivedirectionspeed);
         telemetry.update();
     }
+
+//------------------------------------------------------------------------------
 
     //intakechecks function to keep loop() clean
     private void IntakeChecks() {

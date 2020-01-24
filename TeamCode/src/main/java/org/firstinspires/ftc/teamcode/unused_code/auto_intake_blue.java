@@ -2,12 +2,13 @@ package org.firstinspires.ftc.teamcode.unused_code;
 
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DigitalChannel;
 
 @Autonomous (name = "intake_blue", group = "")
-
+@Disabled
 public class auto_intake_blue extends LinearOpMode {
     private DcMotor motorLeft;
     private DcMotor motorRight;
