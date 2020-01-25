@@ -71,29 +71,29 @@ public class auto_intake_extended extends LinearOpMode {
                     case 10:
                         telemetry.addData("Status: ", "Driving Forward");
                         autoIntake = true;
-                        DriveForwardIntake(1, 2000);
+                        DriveForwardIntake(1, 1800);
                         Runstate = 20;
                         break;
 
                     case 20:
-                        DriveForward(-1,(int) DriveBack - 500);
+                        DriveForward(-1,(int) DriveBack - 850);
                         TurnAxis(0.5, 650);
-                        DriveForward(1,1600);
+                        DriveForward(1,1200);
                         Runstate = 30;
                         break;
 
                     case 30:
                         IntakeOut(1, 500);
-                        DriveForward(-1,2400);
+                        DriveForward(-1,2200);
                         TurnAxis(-0.5, 700);
                         autoIntake = true;
-                        DriveForwardIntake(1, 2000);
+                        DriveForwardIntake(1, 1400);
                         Runstate = 40;
                         break;
 
                     case 40:
-                        DriveForward(-1, (int) DriveBack - 50);
-                        TurnAxis(0.5, 650);
+                        DriveForward(-1, (int) DriveBack - 60);
+                        TurnAxis(0.5, 750);
                         DriveForward(1,1800);
                         IntakeOut(1, 500);
                         DriveForward(-1,500);

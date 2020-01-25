@@ -5,6 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.Servo;
 
 @Autonomous (name = "recht", group = "")
 
@@ -13,6 +14,11 @@ public class auto_recht extends LinearOpMode {
     private DcMotor motorRight;
     private DcMotor intakeLeft;
     private DcMotor intakeRight;
+    private Servo capStone1;
+    private Servo capStone2;
+    private Servo claw1;
+    private Servo claw2;
+
     public int Runstate = 0;
 
     @Override
@@ -21,7 +27,16 @@ public class auto_recht extends LinearOpMode {
         motorRight = hardwareMap.dcMotor.get("motorRight");
         intakeLeft = hardwareMap.dcMotor.get("intakeLeft");
         intakeRight = hardwareMap.dcMotor.get("intakeRight");
+        capStone1 = hardwareMap.servo.get("capStone1");
+        capStone2 = hardwareMap.servo.get("capStone2");
+        claw1 = hardwareMap.servo.get("claw1");
+        claw2 = hardwareMap.servo.get("claw2");
         Runstate = 0;
+
+        capStone1.setPosition(0);
+        capStone2.setPosition(1);
+        claw1.setPosition(0.60);
+        claw2.setPosition(0.60);
 
         telemetry.addData(">", "Press Play to start tracking");
         telemetry.update();

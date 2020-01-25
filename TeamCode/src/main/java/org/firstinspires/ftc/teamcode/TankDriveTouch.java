@@ -151,8 +151,8 @@ public class TankDriveTouch extends OpMode{
             capStone1.setPosition(0);
             capStone2.setPosition(1);
         }else if(gamepad2.dpad_down){
-            capStone1.setPosition(0.30);
-            capStone2.setPosition(0.70);
+            capStone1.setPosition(0.33);
+            capStone2.setPosition(0.60);
         }
 
         if(gamepad2.left_bumper){
