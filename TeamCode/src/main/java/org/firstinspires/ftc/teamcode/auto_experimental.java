@@ -21,9 +21,11 @@ import org.firstinspires.ftc.robotcore.external.navigation.Velocity;
 public class auto_experimental extends LinearOpMode {
     private DcMotor motorLeft;
     private DcMotor motorRight;
-    private DcMotor intakeLeft;
-    private DcMotor intakeRight;
+
     private BNO055IMU imu;
+
+    Orientation angles;
+
     public int Runstate = 0;
     private float startHeading;
 
@@ -31,26 +33,13 @@ public class auto_experimental extends LinearOpMode {
     public void runOpMode() {
         motorLeft = hardwareMap.dcMotor.get("motorLeft");
         motorRight = hardwareMap.dcMotor.get("motorRight");
-        intakeLeft = hardwareMap.dcMotor.get("intakeLeft");
-        intakeRight = hardwareMap.dcMotor.get("intakeRight");
 
         BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
         parameters.angleUnit           = BNO055IMU.AngleUnit.DEGREES;
-        parameters.accelUnit           = BNO055IMU.AccelUnit.METERS_PERSEC_PERSEC;
-        parameters.calibrationDataFile = "BNO055IMUCalibration.json"; // see the calibration sample opmode
-        parameters.loggingEnabled      = true;
-        parameters.loggingTag          = "IMU";
-        parameters.accelerationIntegrationAlgorithm = new JustLoggingAccelerationIntegrator();
-        double StartTimeDetection = 0;
-        //IMU start
+        //parameters.calibrationDataFile = "BNO055IMUCalibration.json";
+
         imu = hardwareMap.get(BNO055IMU.class, "imu");
         imu.initialize(parameters);
-        startHeading = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES).firstAngle;
-        telemetry.addData("IMU status",imu.isGyroCalibrated());
-
-
-        Orientation a = imu.getAngularOrientation();
-        telemetry.addData("StartHeading",  startHeading);
 
         Runstate = 0;
 
@@ -61,8 +50,8 @@ public class auto_experimental extends LinearOpMode {
         if (opModeIsActive()) {
 
             while (opModeIsActive()) {
-                //logUtils.Log(logUtils.logType.normal,String.valueOf( Runstate), 3);
-                telemetry.update();
+
+                angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
 
                 switch (Runstate) {
                     case 0:
@@ -71,14 +60,18 @@ public class auto_experimental extends LinearOpMode {
                         break;
 
                     case 10:
-                        telemetry.addData("Status: ", "Driving Forward");
-                        DriveForward(1, 1000);
+                        telemetry.addData("Status: ", "");
+                        TurnAxis(1,90);
                         Runstate = 20;
                         break;
 
                     case 20:
                         stop();
                 }
+                telemetry.addData("Heading: ", angles.firstAngle);
+                telemetry.addData("Roll: ", angles.secondAngle);
+                telemetry.addData("Pitch: ", angles.thirdAngle);
+                telemetry.update();
 
 
             }
@@ -87,14 +80,20 @@ public class auto_experimental extends LinearOpMode {
 
     }
 
-    private void TurnAxis(double power, int time) {
+    private void TurnAxis(double power, int theta) {
+        while (!(angles.firstAngle > theta)) {
+
         motorRight.setPower(power);
         motorLeft.setPower(power);
 
-        sleep(time);
+        angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
 
+
+    }
         motorLeft.setPower(0);
         motorRight.setPower(0);
+        Runstate += 10;
+
     }
 
     void DriveForward(double power, int time) {
