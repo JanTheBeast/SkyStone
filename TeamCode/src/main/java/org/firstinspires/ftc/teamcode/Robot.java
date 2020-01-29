@@ -6,6 +6,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.Hardware.Drivetrain;
 import org.firstinspires.ftc.teamcode.Hardware.IMU;
+import org.firstinspires.ftc.teamcode.Math.Mathfunc;
 
 public class Robot extends LinearOpMode {
     public Drivetrain drivetrain;
@@ -13,6 +14,7 @@ public class Robot extends LinearOpMode {
     BNO055IMU gyro;
 
     public void robotInit(){
+
         waitForStart();
     }
 
@@ -21,37 +23,8 @@ public class Robot extends LinearOpMode {
     }
 
     public void turnToHeading(double target, double speedMod){
-        boolean goRight;
-        double currentHeading;
-        double degreesLeft;
-        double speed;
-        double prevHeading= 0;
-        ElapsedTime timeout = new ElapsedTime();
 
-
-        currentHeading = imu.currentHeading();
-        degreesLeft = Math.abs(target - currentHeading);
-
-        goRight = target > currentHeading;
-
-        if (degreesLeft > 180) {
-            goRight = !goRight;
-            degreesLeft = 360 - degreesLeft;
-        }
-
-        timeout.reset();
-        prevHeading = currentHeading;
-        while (degreesLeft > .3 && OpModeIsActive() && timeout.seconds() < 2) {
-
-            if (speedMod < 0){
-                speed = (Math.pow((degreesLeft + 25) / -speedMod, 3) + 15) / 100;
-            } else {
-                if(speedMod != 0){
-
-                } else {
-
-                }
-            }
+        while (Mathfunc.range(3, imu.currentHeading(), target) && opModeIsActive()){
 
         }
 
@@ -60,6 +33,12 @@ public class Robot extends LinearOpMode {
     private double getSpeed() {
 
     }
+
+    @Override
+    public void runOpMode() throws InterruptedException {
+
+    }
+
 
 
 
