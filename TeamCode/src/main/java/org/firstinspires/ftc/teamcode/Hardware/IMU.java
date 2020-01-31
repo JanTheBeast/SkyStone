@@ -30,11 +30,6 @@ public class IMU {
         double currentHeading;
         angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.XYZ, AngleUnit.DEGREES);
         currentHeading = angles.firstAngle;
-        if (currentHeading > 0){
-            currentHeading = 360 - currentHeading;
-        } else {
-            currentHeading *= -1;
-        }
         return currentHeading;
     }
 
@@ -48,34 +43,6 @@ public class IMU {
         values[2] = angles.thirdAngle;
 
         return values;
-    }
-
-    public double headingAdjustment(double targetHeading){
-        double adjustment;
-        double currentHeading;
-        double degreesOff;
-        boolean goRight;
-
-        currentHeading = currentHeading();
-
-        goRight = targetHeading > currentHeading;
-        degreesOff = Math.abs(targetHeading - currentHeading);
-
-        if (degreesOff > 180) {
-            goRight = !goRight;
-            degreesOff = 360 - degreesOff;
-        }
-
-        if (degreesOff < .3) {
-            adjustment = 0;
-        } else {
-            adjustment = (Math.pow((degreesOff + 2) / 5, 2) + 2) / 100;
-        }
-
-        if (goRight) {
-            adjustment = -adjustment;
-        }
-        return adjustment;
     }
 
 }

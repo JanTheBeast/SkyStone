@@ -1,21 +1,18 @@
 package org.firstinspires.ftc.teamcode.Hardware;
 
-import com.qualcomm.hardware.bosch.BNO055IMU;
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
-
-import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
-import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
-import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 
 import org.firstinspires.ftc.teamcode.Math.Constants;
 import org.firstinspires.ftc.teamcode.Math.Mathfunc;
 
 public class Drivetrain {
-    DcMotor frontLeft;
-    DcMotor frontRight;
-    DcMotor backLeft;
-    DcMotor backRight;
-    BNO055IMU imu;
+    public DcMotor frontLeft;
+    public DcMotor frontRight;
+    public DcMotor backLeft;
+    public DcMotor backRight;
+    public IMU imu;
+    public LinearOpMode opMode;
 
     public Drivetrain (DcMotor frontLeft, DcMotor frontRight, DcMotor backLeft, DcMotor backRight){
         frontRight.setDirection(DcMotor.Direction.REVERSE);
@@ -48,12 +45,16 @@ public class Drivetrain {
         backRight.setPower(brpower);
     }
 
-    public void turnToAngle(double angle, double speed, double precision){
-            double lastError;
-            long lastTime;
-        while(!Mathfunc.range(3, imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.XYZ, AngleUnit.DEGREES).thirdAngle,angle), precision){
+    public void turnOff(){
+        setPower(0,0,0,0);
+    }
 
-            double error = angle - imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.XYZ, AngleUnit.DEGREES). thirdAngle;
+    public void turnToAngle(double angle, double speed, double precision){
+            double lastError = 0;
+            long lastTime = 0;
+        while(!Mathfunc.range(precision, imu.currentHeading(),angle) && opMode.opModeIsActive()){
+
+            double error = angle - imu.currentHeading();
             long currTime = System.currentTimeMillis();
             double dE = error - lastError;
             long dT = currTime - lastTime;
@@ -63,11 +64,59 @@ public class Drivetrain {
             lastError = error;
             lastTime = currTime;
         }
-        setPower(0,0,0,0);
+        turnOff();
     }
 
     public void ForwardCorrection(int time, double speed){
-        double startAngle =
+
+        double startAngle = imu.currentHeading();
+        double endTime = System.currentTimeMillis() + time;
+        double left;
+        double right;
+        double correction;
+
+        while(System.currentTimeMillis() < endTime && opMode.opModeIsActive()){
+
+            correction = (startAngle - imu.currentHeading());
+            right = speed + correction;
+            left = speed - correction;
+            left = Mathfunc.clampProportion(-1,1,left,right)[0];
+            right = Mathfunc.clampProportion(-1,1,left,right)[1];
+            setPower(left,right,left,right);
+
+        }
+        turnOff();
+    }
+
+    public void MoveSideways(double speed, double time){
+        double startTime = System.currentTimeMillis();
+        double endTime = startTime + time;
+        while(System.currentTimeMillis() < endTime && opMode.opModeIsActive()){
+            setPower(speed,speed,-speed,-speed);
+        }
+        turnOff();
+    }
+
+    public void MoveAngle(double speed, double angle, double time){
+
+        double startTime = System.currentTimeMillis();
+        double endTime = startTime + time;
+        double frontLeftPower;
+        double frontRightPower;
+        double backLeftPower;
+        double backRightPower;
+
+        angle -= Math.PI /4;
+
+        while(System.currentTimeMillis() < endTime && opMode.opModeIsActive()) {
+            frontLeftPower = (speed * Math.cos(angle));
+            frontRightPower = (speed * Math.sin(angle));
+            backLeftPower = (speed * Math.sin(angle));
+            backRightPower = (speed * Math.cos(angle));
+
+            setPower(frontLeftPower, frontRightPower, backLeftPower, backRightPower);
+        }
+        turnOff();
     }
 
 }
