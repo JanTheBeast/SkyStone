@@ -40,7 +40,6 @@ public class auto_intake_extended extends LinearOpMode {
         claw2 = hardwareMap.servo.get("claw2");
         sensorTouch = hardwareMap.digitalChannel.get("sensorTouch");
         autoIntake = false;
-        //autoIntake2 = false;
         Runstate = 0;
         DriveBack = 0;
         startTime = 0;
@@ -53,8 +52,6 @@ public class auto_intake_extended extends LinearOpMode {
         telemetry.addData(">", "Press Play to start tracking");
         telemetry.update();
         waitForStart();
-        //intakeTime = System.currentTimeMillis();
-        //intakeTime2 = System.currentTimeMillis();
 
         if (opModeIsActive()) {
 
@@ -151,26 +148,6 @@ public class auto_intake_extended extends LinearOpMode {
                 }
         }
     }
-
-    /*void DriveForwardIntake2(double power, int time) {
-        while(autoIntake2) {
-            motorRight.setPower(power);
-            motorLeft.setPower(-power);
-            intakeLeft.setPower(-power);
-            intakeRight.setPower(power);
-
-            //sleep(time);
-            if(sensorTouch.getState() == false || System.currentTimeMillis() - intakeTime2 > time){
-                DriveBack = System.currentTimeMillis() - intakeTime2;
-                intakeLeft.setPower(0);
-                intakeRight.setPower(0);
-                motorLeft.setPower(0);
-                motorRight.setPower(0);
-                autoIntake2 = false;
-            }
-
-        }
-    }*/
 
     void IntakeIn(double power){
         intakeLeft.setPower(-power);
