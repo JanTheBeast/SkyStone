@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.Autonomous;
 
 
+import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
@@ -17,6 +18,7 @@ public class auto_experimental extends LinearOpMode {
     private DcMotor backLeft;
     private DcMotor backRight;
     private Drivetrain drivetrain;
+    private BNO055IMU _imu;
     private IMU imu;
 
     public int Runstate = 0;
@@ -25,6 +27,7 @@ public class auto_experimental extends LinearOpMode {
     @Override
     public void runOpMode() {
         drivetrain = new Drivetrain(frontLeft,frontRight,backLeft,backRight);
+        imu = new IMU(_imu);
 
         imu.initialize();
 
